@@ -8,7 +8,7 @@ This project contains an extension for ASP.NET Core gRPC server that allows REST
 1. Add a package reference to `Microsoft.AspNetCore.Grpc.HttpApi`.
 2. Register services in *Startup.cs* with `AddGrpcHttpApi()`.
 2. Include `<Protobuf>` reference to *google/api/http.proto* and *google/api/http.proto*.
-3. Annotate services in your *.proto* file with your HTTP method bindings and routes:
+3. Annotate gRPC methods in your *.proto* file with your HTTP bindings and routes:
 
 ```protobuf
 syntax = "proto3";
@@ -40,3 +40,5 @@ The `SayHello` gRPC method can now be invoked with Protobuf+gRPC and with `GET /
 ### Experimental project
 
 This project is experimental. It is not complete or fully tested. There is no commitment to completing it.
+
+If gRPC+HTTP API is interesting to you then please give feedback.
