@@ -1,7 +1,7 @@
 ASP.NET Core gRPC HTTP API
 ==========================
 
-This project contains an extension for ASP.NET Core gRPC server that allows RESTful HTTP APIs for gRPC endpoints. HTTP API concepts like a URL parameter binding, HTTP verbs and JSON request/response can be used to invoke gRPC services.
+This project is an extension for ASP.NET Core gRPC server that allows RESTful HTTP APIs for gRPC endpoints. HTTP API concepts like a URL parameter binding, HTTP verbs and JSON request/response can be used to invoke gRPC services.
 
 ### Usage:
 
@@ -41,4 +41,4 @@ The `SayHello` gRPC method can now be invoked with Protobuf+gRPC and with `GET /
 
 This project is experimental. It is not complete or fully tested. There is no commitment to completing it.
 
-If gRPC+HTTP API is interesting to you then please give feedback.
+We want to gauge developer interest in gRPC+HTTP API. If gRPC+HTTP API is interesting to you then please give feedback.
