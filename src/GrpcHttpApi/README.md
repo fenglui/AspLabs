@@ -1,31 +1,42 @@
-Proxy
-=====
+ASP.NET Core gRPC HTTP API
+==========================
 
-This project contains an ASP.NET Core middleware which runs proxy forwarding requests to another server.
+This project contains an extension for ASP.NET Core gRPC server that allows RESTful HTTP APIs for gRPC endpoints. HTTP API concepts like a URL parameter binding, HTTP verbs and JSON request/response can be used to invoke gRPC services.
 
-Usage:
-```c#
-    public class Startup
-    {
-        public void ConfigureServices(IServiceCollection services)
-        {
-            services.AddProxy(options =>
-            {
-                options.PrepareRequest = (originalRequest, message) =>
-                {
-                    message.Headers.Add("X-Forwarded-Host", originalRequest.Host.Host);
-                    return Task.FromResult(0);
-                };
-            });
-        }
+### Usage:
 
-        public void Configure(IApplicationBuilder app)
-        {
-            app.UseWebSockets().RunProxy(new Uri("https://example.com"));
-        }
-    }
+1. Add a package reference to `Microsoft.AspNetCore.Grpc.HttpApi`.
+2. Register services in *Startup.cs* with `AddGrpcHttpApi()`.
+2. Include `<Protobuf>` reference to *google/api/http.proto* and *google/api/http.proto*.
+3. Annotate services in your *.proto* file with your HTTP method bindings and routes:
+
+```protobuf
+syntax = "proto3";
+
+import "google/api/annotations.proto";
+
+package greet;
+
+service Greeter {
+  rpc SayHello (HelloRequest) returns (HelloReply) {
+    option (google.api.http) = {
+      get: "v1/greeter/{name}"
+    };
+  }
+}
+
+message HelloRequest {
+  string name = 1;
+  string test_name = 2;
+}
+
+message HelloReply {
+  string message = 1;
+}
 ```
 
-#  Related Projects
+The `SayHello` gRPC method can now be invoked with Protobuf+gRPC and with `GET /v1/greeter/world` to return `{ "message": "Hello world" }`. See [HttpRule](https://cloud.google.com/service-infrastructure/docs/service-management/reference/rpc/google.api#google.api.HttpRule) for more customization options.
 
-1. [ProxyKit](https://github.com/damianh/ProxyKit) - a toolkit to create HTTP (reverse) Proxies.
+### Experimental project
+
+This project is experimental. It is not complete or fully tested. There is no commitment to completing it.
